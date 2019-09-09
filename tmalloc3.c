@@ -1,23 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct List_ {
-    // char *data[];
+typedef struct List_
+{
+    char *name;
     int number;
+    int number2;
     struct List_ *next;
 } List;
 
-void mallocMaxInts(int maxInts, List list){
-    printf("alloc\n");
+void mallocMaxInts(int maxInts, List list)
+{
+    printf("alloc size %d\n", sizeof(List));
     int i = 0;
     List *currentPtr = &list;
-    while(1){
-        if(i >= maxInts){
+    while (1)
+    {
+        if (i >= maxInts)
+        {
             break;
         }
 
         List *listItem = malloc(sizeof(List));
         (*listItem).number = i;
+        (*listItem).number2 = i;
+        (*listItem).name = "paul";
         (*currentPtr).next = listItem;
         currentPtr = listItem;
         // printf("%d %d\n", newInt, *newInt);
@@ -26,27 +33,27 @@ void mallocMaxInts(int maxInts, List list){
 
     printf("free\n");
     i = 0;
-    free(list.next);
-    // while(1){
-        // if((*currentPtr).next == NULL){
-        //     free(currentPtr);
-        //     break;
-        // }
-        
-        // List *temp = currentPtr;
-        // (*currentPtr).next;
 
+    currentPtr = list.next;
+    while (1)
+    {
+        if ((*currentPtr).next == NULL)
+        {
+            free(currentPtr);
+            break;
+        }
 
-        // printf("%d %d\n", ptrs[i], *ptrs[i]);
-        // i++;
-    // }
+        printf("%d %s\n", (*currentPtr).next, (*currentPtr).name);
+        List *temp = currentPtr;
+        currentPtr = (*currentPtr).next;
+        free(temp);
+        i++;
+    }
 }
-
-
 
 int main(void)
 {
-    int memMax = (600 * 1000) * 1000;
+    int memMax = (100 * 1000) * 1000;
     int maxInts = memMax / sizeof(int);
 
     printf("start\n");
@@ -57,6 +64,7 @@ int main(void)
     list.next = NULL;
 
     // mallocMaxInts(maxInts, list);
-    mallocMaxInts(100000, list);
+    mallocMaxInts(10, list);
+    
     return 0;
 }
