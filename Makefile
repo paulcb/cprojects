@@ -17,7 +17,7 @@ CFLAGS   = $(OPTS) $(DEBUG)
 #--------------------------------------------------------------------
 # Set up the targets and prepare the compiling options
 #--------------------------------------------------------------------
-TARGETS=main testmalloc
+TARGETS=main testmalloc tmalloc2 tmalloc3
 
 all: $(TARGETS)
 

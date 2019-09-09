@@ -1,23 +1,28 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 int main()
 {
-    int size = 10000000;
+    int size = 8000000;
     int *ptrs[size];
-    int *ptr;
+    // int *ptr;
     int i;
+
+    printf("start\n");
+    printf("Int size %d\n", sizeof(int));
+
     for (i = 0; i < size; i++)
     {
-        *ptr = (int*) malloc(sizeof(int));
+        int *ptr = malloc(sizeof(int));
         if(ptr == NULL){
             printf("%d\n", i);
             ptrs[i] = NULL;
             continue;
         }
-        *ptr = 1;
+        *ptr = i;
         ptrs[i] = ptr;
-        // printf("%d %d\n", somePtr, *somePtr);
+        // printf("%d %d\n", ptr, *ptr);
     }
 
     for (i = 0; i < size; i++)
@@ -27,9 +32,5 @@ int main()
         }
     }
 
-    // ptr = (int *)malloc(sizeof(int));
-    // printf("%d\n", ptr);
-
-    // free(ptr);
     return 0;
 }
