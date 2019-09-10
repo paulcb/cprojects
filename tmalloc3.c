@@ -9,11 +9,11 @@ typedef struct List_
     struct List_ *next;
 } List;
 
-void mallocMaxInts(int maxInts, List list)
+void mallocMaxInts(int maxInts, List *list)
 {
     printf("alloc size %d\n", sizeof(List));
     int i = 0;
-    List *currentPtr = &list;
+    List *currentPtr = list;
     while (1)
     {
         if (i >= maxInts)
@@ -32,9 +32,12 @@ void mallocMaxInts(int maxInts, List list)
     }
 
     printf("free\n");
-    i = 0;
 
-    currentPtr = list.next;
+}
+
+void freeList2(List *head){
+    List *currentPtr = head->next;
+    int i=0;
     while (1)
     {
         if ((*currentPtr).next == NULL)
@@ -51,6 +54,14 @@ void mallocMaxInts(int maxInts, List list)
     }
 }
 
+void freeList(List *head){
+    List *p, *q;
+    for(p = head; p != NULL; p = q){
+        q = p->next;
+        free(p);
+    }
+}
+
 int main(void)
 {
     int memMax = (100 * 1000) * 1000;
@@ -59,12 +70,12 @@ int main(void)
     printf("start\n");
     printf("Int size %d\n", sizeof(int));
     printf("max ints %d\n", maxInts);
-    List list;
-    list.number = 1;
-    list.next = NULL;
+    List *list = malloc(sizeof(List));
+    list->number = 1;
+    list->next = NULL;
 
     // mallocMaxInts(maxInts, list);
-    mallocMaxInts(10, list);
-    
+    mallocMaxInts(100, list);
+    freeList(list);
     return 0;
 }
